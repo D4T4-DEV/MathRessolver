@@ -1,17 +1,32 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
+
+// Componente para poder ser modificarlo sin 
+// afectar al componente de entrada "App"
+function AppContent() {
+  return (
+    <SafeAreaView style={styles.childContainer}>
+      <StatusBar style='inverted' />
+      <Text>Open up App.tsx to start working on your app!</Text>
+    </SafeAreaView>
+  )
+}
+
+// Componente principal de la aplicacion
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={styles.dadContainer}>
+      <AppContent />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  dadContainer: {
+    flex: 1
+  },
+  childContainer: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',

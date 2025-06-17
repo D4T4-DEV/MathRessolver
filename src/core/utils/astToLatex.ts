@@ -12,6 +12,8 @@ export function toLatex(expression: string): string {
         // Verifica si es una ecuación con '='
         if (expression.includes('=')) {
             const [lhs, rhs] = expression.split('=');
+            // lhs -> Lado izquierdo de la ecuación
+            // rhs -> Lado derecho de la ecuación
 
             if (!lhs || !rhs) {
                 return '\\text{Expresión inválida}';

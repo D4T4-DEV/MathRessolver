@@ -2,7 +2,7 @@ import { AlgebraRule } from '../AlgebraRule';
 import { DistributeRule } from './DistributeRule';
 import { ReduceTermsRule } from './ReduceTermsRule';
 import { SimplifyRule } from './SimplifyRule';
-import { SolveLinearStepRule } from './SolveEquationLinear';
+import { SolveLinearStepRule } from '../solvers/SolveEquationLinear';
 import { TransposeRule } from './TransposeRule';
 
 /**

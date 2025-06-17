@@ -1,5 +1,4 @@
-
-import { AlgebraRule } from '@/core/engine-algebra-rules/AlgebraRule';
+import { AlgebraRule } from '@/core/engine-algebra/AlgebraRule';
 import { EquationStep } from '../entities/EquationStep';
 import { TransformExpresionToLatex } from './TransformExpresionToLatex';
 
@@ -9,14 +8,21 @@ export class ApplyRule {
     ) { }
 
     execute(rule: AlgebraRule, expression: string): EquationStep {
+        // Obtiene el resultado (un paso)
+        const ruleResult = rule.apply(expression);
+
+        // Convierte antes y después a LaTeX
         const { laTex: latexBefore = '' } = this.transformToLatexUseCase.execute(expression);
-        const result = rule.apply(expression);
-        const { laTex: latexAfter = '' } = this.transformToLatexUseCase.execute(result);
+        const { laTex: latexAfter = '' } = this.transformToLatexUseCase.execute(ruleResult.result);
 
         return {
+            description: rule.name,
             latexBefore,
             latexAfter,
-            description: rule.name,
+            ruleName: rule.name,
+            isFinal: ruleResult.isFinal ?? false,
+            expressionBefore: expression,
+            expressionAfter: ruleResult.result,
         };
     }
 }

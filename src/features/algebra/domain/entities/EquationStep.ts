@@ -1,5 +1,9 @@
 export interface EquationStep {
+  description: string;
   latexBefore: string;
   latexAfter: string;
-  description: string;
+  ruleName: string;
+  isFinal?: boolean;
+  expressionBefore?: string;
+  expressionAfter?: string;
 }

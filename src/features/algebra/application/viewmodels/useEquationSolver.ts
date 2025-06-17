@@ -12,10 +12,20 @@ export const useEquationSolverViewModel = () => {
         let current = input;
         const newSteps: EquationStep[] = [];
 
-        for (const rule of rules) {
-            const step = applyRuleUseCase.execute(rule, current);
-            newSteps.push(step);
-            current = step.latexAfter; // pasar la nueva ecuación al siguiente paso
+        let changed = true;
+        while (changed) {
+            changed = false;
+
+            for (const rule of rules) {
+                const step = applyRuleUseCase.execute(rule, current);
+
+                if (step.expressionAfter !== current) {
+                    newSteps.push(step);
+                    current = step.expressionAfter!;
+                    changed = true;
+                    break; // reinicia reglas desde el inicio
+                }
+            }
         }
 
         setSteps(newSteps);

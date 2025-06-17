@@ -1,4 +1,4 @@
-import { AlgebraRule } from "@/core/engine-algebra-rules/AlgebraRule";
+import { AlgebraRule } from "@/core/engine-algebra/AlgebraRule";
 import { EquationStep } from "../entities/EquationStep";
 
 export interface EquationStepRepository {

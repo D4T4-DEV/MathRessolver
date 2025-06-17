@@ -2,6 +2,7 @@ import { AlgebraRule } from '../AlgebraRule';
 import { DistributeRule } from './DistributeRule';
 import { ReduceTermsRule } from './ReduceTermsRule';
 import { SimplifyRule } from './SimplifyRule';
+import { SolveLinearStepRule } from './SolveEquationLinear';
 import { TransposeRule } from './TransposeRule';
 
 /**
@@ -15,4 +16,5 @@ export const algebraRules: AlgebraRule[] = [
     new DistributeRule(),   // Regla para aplicar la propiedad distributiva
     new ReduceTermsRule(),  // Regla para reducir términos semejantes
     new SimplifyRule(),     // Regla para simplificar expresiones algebraicas
+    new SolveLinearStepRule(), // Regla para resolver expresiones algebraicas de primer grado
 ];

@@ -14,7 +14,12 @@ export interface AlgebraRule {
      * Aplica la regla algebraica sobre la expresión proporcionada.
      * 
      * @param expression - Expresión algebraica en formato string sobre la cual se aplicará la regla.
-     * @returns La expresión resultante después de aplicar la regla, en formato string.
+     * @returns La expresión resultante después de aplicar la regla, en formato RuleResult.
      */
-    apply(expression: string): string;
+    apply(expression: string): RuleResult;
+}
+
+export interface RuleResult {
+    result: string;
+    isFinal?: boolean;
 }

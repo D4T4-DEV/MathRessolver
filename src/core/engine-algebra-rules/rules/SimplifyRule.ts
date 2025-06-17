@@ -1,4 +1,4 @@
-import { AlgebraRule } from "../AlgebraRule";
+import { AlgebraRule, RuleResult } from "../AlgebraRule";
 import { simplify } from "mathjs";
 
 /**
@@ -12,18 +12,14 @@ export class SimplifyRule implements AlgebraRule {
      * Aplica la simplificación a la expresión algebraica dada.
      * 
      * @param expression - Expresión en formato string que será simplificada.
-     * @returns La expresión simplificada como string o un mensaje de error si la simplificación falla.
+     * @returns Un objeto RuleResult con la expresión simplificada o el mensaje de error.
      */
-    apply(expression: string): string {
+    apply(expression: string): RuleResult {
         try {
-            // Utiliza la función simplify de mathjs para simplificar la expresión
             const simplified = simplify(expression);
-
-            // Convierte el resultado a string y lo devuelve
-            return simplified.toString();
+            return { result: simplified.toString() };
         } catch {
-            // En caso de error, devuelve un mensaje indicativo
-            return "Error al simplificar";
+            return { result: "Error al simplificar" };
         }
     }
 }

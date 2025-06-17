@@ -1,4 +1,4 @@
-import { AlgebraRule } from "../AlgebraRule"; 
+import { AlgebraRule, RuleResult } from "../AlgebraRule";
 import { simplify } from "mathjs";
 
 /**
@@ -12,19 +12,14 @@ export class DistributeRule implements AlgebraRule {
      * Aplica la regla distributiva sobre la expresión algebraica dada.
      * 
      * @param expression - Expresión algebraica en formato string sobre la cual aplicar la distributiva.
-     * @returns La expresión resultante después de aplicar la distributiva, o un mensaje de error si falla.
+     * @returns Un objeto RuleResult con la expresión expandida o un mensaje de error si falla.
      */
-    apply(expression: string): string {
+    apply(expression: string): RuleResult {
         try {
-            // Usamos la función simplify de mathjs con la regla 'expand'
-            // para distribuir productos sobre sumas (expandir la expresión)
             const expanded = simplify(expression, { rules: ['expand'] });
-
-            // Convertimos el resultado a string para devolverlo
-            return expanded.toString();
+            return { result: expanded.toString() };
         } catch {
-            // Si ocurre algún error durante el proceso, devolvemos un mensaje de error
-            return "Error al aplicar distributiva";
+            return { result: "Error al aplicar distributiva" };
         }
     }
 }

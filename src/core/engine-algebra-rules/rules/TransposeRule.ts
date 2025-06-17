@@ -1,4 +1,4 @@
-import { AlgebraRule } from "../AlgebraRule";
+import { AlgebraRule, RuleResult } from "../AlgebraRule";
 import { parse, simplify, MathNode, OperatorNode } from "mathjs";
 
 /**
@@ -21,41 +21,34 @@ export class TransposeRule implements AlgebraRule {
   // Nombre descriptivo de la regla
   name = "Transponer";
 
-  /**
+  /** 
    * Aplica la regla de transposición en expresiones con igualdad.
    * Ejemplo: transforma "a + b = c" en "a = c - b".
    * 
    * @param expression - Expresión algebraica en formato string con un signo igual
-   * @returns Expresión modificada con el término transpuesto o la original si no aplica o si hay error.
+   * @returns Un objeto RuleResult con la expresión transpuesta o la original si no aplica.
    */
-  apply(expression: string): string {
+  apply(expression: string): RuleResult {
     try {
-      // Parseamos la expresión a un árbol de nodos mathjs
       const node = parse(expression);
 
-      // Verificamos que el nodo raíz sea un operador '='
-      if (!isOperatorNode(node) || node.op !== "=") return expression;
-
-      // Extraemos los lados izquierdo y derecho de la igualdad
-      const [left, right] = node.args;
-
-      // Si el lado izquierdo es una suma (operador '+')
-      if (isOperatorNode(left) && left.op === "+") {
-        // Separamos el término principal y el que se desea mover
-        const [main, toMove] = left.args;
-
-        // Construimos el nuevo lado derecho restando el término a mover
-        const newRight = simplify(`${right.toString()} - (${toMove.toString()})`);
-
-        // Devolvemos la ecuación con el término transpuesto
-        return `${main.toString()} = ${newRight.toString()}`;
+      if (!isOperatorNode(node) || node.op !== "=") {
+        return { result: expression };
       }
 
-      // Si no cumple las condiciones para transponer, regresamos la expresión original
-      return expression;
+      const [left, right] = node.args;
+
+      if (isOperatorNode(left) && left.op === "+") {
+        const [main, toMove] = left.args;
+        const newRight = simplify(`${right.toString()} - (${toMove.toString()})`);
+        const newExpression = `${main.toString()} = ${newRight.toString()}`;
+
+        return { result: newExpression };
+      }
+
+      return { result: expression };
     } catch {
-      // En caso de error, devolvemos mensaje indicativo
-      return "Error al transponer";
+      return { result: "Error al transponer" };
     }
   }
 }

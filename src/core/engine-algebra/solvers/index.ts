@@ -9,7 +9,7 @@ import { SolveLinearStepRule } from '../solvers/SolveEquationLinear';
  * Estas reglas implementan la interfaz AlgebraRule y pueden ser aplicadas
  * en secuencia o de forma individual para manipular expresiones algebraicas.
  */
-export const algebraSolversByType: Record<EquationType, AlgebraRule[]> = {
+export const algebraSolvers: Record<EquationType, AlgebraRule[]> = {
     lineal: [new SolveLinearStepRule()],
     cuadratica: [],
     exponencial: [],

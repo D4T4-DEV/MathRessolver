@@ -9,29 +9,10 @@ export const useEquationRuleViewModel = () => {
 
     const rules = useMemo<AlgebraRule[]>(() => getAvailableRulesUseCase.execute() ?? [], []);
 
-    const solve = () => {
+    const solve = (rule: AlgebraRule) => {
         if (!input.trim()) return;
-
-        let current = input;
-        const newSteps: EquationStep[] = [];
-
-        let changed = true;
-        while (changed) {
-            changed = false;
-
-            for (const rule of rules) {
-                const step = applyRuleUseCase.execute(rule, current);
-
-                if (step.expressionAfter !== current) {
-                    newSteps.push(step);
-                    current = step.expressionAfter!;
-                    changed = true;
-                    break;
-                }
-            }
-        }
-
-        setSteps(newSteps);
+        const step = applyRuleUseCase.execute(rule, input);
+        setSteps([step]);
     };
 
     return {

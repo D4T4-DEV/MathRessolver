@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { EquationStep } from '../../domain/entities/EquationStep';
 import { applySolverUseCase } from '../../di/container';
-import { algebraSolversByType } from '@/core/engine-algebra/solvers';
+import { algebraSolvers } from '@/core/engine-algebra/solvers';
 import { DetecTypeExpressionAlgebraUseCase } from '../../domain/usecases/DetecTypeExpressionAlgebra';
 import { EquationType } from '@/core/@types/global';
 
@@ -18,7 +18,7 @@ export const useEquationSolverViewModel = () => {
         const tipo = detectTypeUseCase.execute(input);
         setEquationType(tipo);
 
-        const solvers = algebraSolversByType[tipo] ?? [];
+        const solvers = algebraSolvers[tipo] ?? [];
 
         let current = input;
         const newSteps: EquationStep[] = [];

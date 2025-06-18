@@ -1,13 +1,13 @@
 import { useState, useMemo } from 'react';
 import { EquationStep } from '../../domain/entities/EquationStep';
-import { getAvailableSolversUseCase, applySolverUseCase } from '../../di/container';
+import { getAvailableRulesUseCase, applyRuleUseCase } from '../../di/container';
 import { AlgebraRule } from '@/core/engine-algebra/AlgebraRule';
 
-export const useEquationSolverViewModel = () => {
+export const useEquationRuleViewModel = () => {
     const [input, setInput] = useState('');
     const [steps, setSteps] = useState<EquationStep[]>([]);
 
-    const solvers = useMemo<AlgebraRule[]>(() => getAvailableSolversUseCase.execute() ?? [], []);
+    const rules = useMemo<AlgebraRule[]>(() => getAvailableRulesUseCase.execute() ?? [], []);
 
     const solve = () => {
         if (!input.trim()) return;
@@ -19,14 +19,14 @@ export const useEquationSolverViewModel = () => {
         while (changed) {
             changed = false;
 
-            for (const solver of solvers) {
-                const step = applySolverUseCase.execute(solver, current);
+            for (const rule of rules) {
+                const step = applyRuleUseCase.execute(rule, current);
 
                 if (step.expressionAfter !== current) {
                     newSteps.push(step);
                     current = step.expressionAfter!;
                     changed = true;
-                    break; // Reinicia los solucionadores desde el principio
+                    break;
                 }
             }
         }
@@ -39,5 +39,6 @@ export const useEquationSolverViewModel = () => {
         setInput,
         steps,
         solve,
+        rules,
     };
 };

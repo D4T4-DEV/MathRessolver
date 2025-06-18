@@ -4,4 +4,6 @@ import { EquationStep } from "../entities/EquationStep";
 export interface EquationStepRepository {
     applyRule(rule: AlgebraRule, expression: string): EquationStep;
     getAvailableRules(): AlgebraRule[];
+    applySolver(rule: AlgebraRule, expression: string): EquationStep;
+    getAvailableSolvers(): AlgebraRule[];
 }

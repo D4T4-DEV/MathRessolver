@@ -3,7 +3,7 @@ import { ApplyRule } from "../domain/usecases/ApplyRule";
 import { ApplySolver } from "../domain/usecases/ApplySolver";
 import { DetecTypeExpressionAlgebraUseCase } from "../domain/usecases/DetecTypeExpressionAlgebra";
 import { GetAvailableRulesUseCase } from "../domain/usecases/GetAvailableRules";
-import { GetAvailableSolversUseCase } from "../domain/usecases/getAvailableSolvers";
+import { GetAvailableSolversUseCase } from "../domain/usecases/GetAvailableSolvers";
 import { TransformExpresionToLatex } from "../domain/usecases/TransformExpresionToLatex";
 
 /**

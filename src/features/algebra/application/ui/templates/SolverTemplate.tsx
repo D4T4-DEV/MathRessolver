@@ -19,10 +19,15 @@ export const SolverTemplate = ({
 }: SolverTemplateProps) => (
     <ScrollView contentContainerStyle={{ padding: 16 }}>
         <EquationSolverForm input={input} setInput={setInput} onSolve={onSolve} />
+        {steps.length > 0 && (
+            <View style={{ marginVertical: 8 }}>
+                <Text>Regla aplicada:</Text>
+                <Text>{steps[0].description}</Text>
+            </View>
+        )}
         <Text style={{ fontWeight: 'bold', marginTop: 20 }}>Pasos:</Text>
         {steps.map((step, index) => (
             <View key={index} style={{ marginVertical: 8 }}>
-                <Text>Regla aplicada: {step.description}</Text>
                 <Text>Antes:</Text>
                 <MathRenderer math={step.latexAfter} />
                 <Text>Después:</Text>

@@ -1,6 +1,7 @@
 import { ExpresionRepositoryImpl } from "../data/repositories_impl/ExpressionRepositoryImp";
 import { ApplyRule } from "../domain/usecases/ApplyRule";
 import { ApplySolver } from "../domain/usecases/ApplySolver";
+import { DetecTypeExpressionAlgebraUseCase } from "../domain/usecases/DetecTypeExpressionAlgebra";
 import { GetAvailableRulesUseCase } from "../domain/usecases/GetAvailableRules";
 import { GetAvailableSolversUseCase } from "../domain/usecases/getAvailableSolvers";
 import { TransformExpresionToLatex } from "../domain/usecases/TransformExpresionToLatex";
@@ -26,6 +27,11 @@ export const getAvailableRulesUseCase = new GetAvailableRulesUseCase();
  * Caso de uso que provee la lista de solucionadores algebraicos disponibles para aplicar.
  */
 export const getAvailableSolversUseCase = new GetAvailableSolversUseCase();
+
+/**
+ * Caso de uso que devuelve el tipo de ecuación que se le ha pasado
+ */
+export const detecTypeExpressionAlgebraUseCase = new DetecTypeExpressionAlgebraUseCase();
 
 /**
  * Caso de uso para aplicar una regla algebraica sobre una expresión.

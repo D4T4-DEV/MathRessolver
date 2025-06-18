@@ -26,3 +26,6 @@ declare module 'react-native-math-view' {
     // y utiliza la interfaz de props definida anteriormente
     export default class MathView extends Component<MathViewProps> {}
 }
+
+
+export type EquationType = 'lineal' | 'cuadratica' | 'exponencial' | 'desconocida';

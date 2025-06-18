@@ -3,7 +3,7 @@ import { ApplyRule } from "../domain/usecases/ApplyRule";
 import { ApplySolver } from "../domain/usecases/ApplySolver";
 import { DetecTypeExpressionAlgebraUseCase } from "../domain/usecases/DetecTypeExpressionAlgebra";
 import { GetAvailableRulesUseCase } from "../domain/usecases/GetAvailableRules";
-import { GetAvailableSolversUseCase } from "../domain/usecases/GetAvailableSolvers";
+// import { GetAvailableSolversUseCase } from "../domain/usecases/GetAvailableSolvers";
 import { TransformExpresionToLatex } from "../domain/usecases/TransformExpresionToLatex";
 
 /**
@@ -26,7 +26,7 @@ export const getAvailableRulesUseCase = new GetAvailableRulesUseCase();
 /**
  * Caso de uso que provee la lista de solucionadores algebraicos disponibles para aplicar.
  */
-export const getAvailableSolversUseCase = new GetAvailableSolversUseCase();
+// export const getAvailableSolversUseCase = new GetAvailableSolversUseCase();
 
 /**
  * Caso de uso que devuelve el tipo de ecuación que se le ha pasado

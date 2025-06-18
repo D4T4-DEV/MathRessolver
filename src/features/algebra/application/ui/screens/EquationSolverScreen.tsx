@@ -3,7 +3,7 @@ import React from 'react';
 import { SolverTemplate } from '../templates/SolverTemplate';
 import { useEquationSolverViewModel } from '../../viewmodels/useEquationSolver';
 
-export const EquationSolverPage = () => {
+export const EquationSolverScreen = () => {
     const { input, setInput, steps, solve } = useEquationSolverViewModel();
 
     return (

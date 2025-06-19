@@ -1,5 +1,6 @@
+import { EquationSolverScreen } from '@/features/algebra/application/ui/screens/EquationSolverScreen';
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 
 
 // Componente para poder ser modificarlo sin 
@@ -8,7 +9,8 @@ function AppContent() {
   return (
     <SafeAreaView style={styles.childContainer}>
       <StatusBar style='inverted' />
-      <Text>Open up App.tsx to start working on your app!</Text>
+      {/* <Text>Open up App.tsx to start working on your app!</Text> */}
+      <EquationSolverScreen />
     </SafeAreaView>
   )
 }

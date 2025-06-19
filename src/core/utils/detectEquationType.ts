@@ -1,6 +1,5 @@
 import { MathNode, OperatorNode, ConstantNode, simplify } from 'mathjs';
-
-type EquationType = 'lineal' | 'cuadratica' | 'exponencial' | 'desconocida';
+import { EquationType } from '../@types/global';
 
 /**
  * Type guard para OperatorNode
@@ -24,10 +23,19 @@ export function detectEquationType(expression: string): EquationType {
     const [lhs] = expression.split('=');
     const node = simplify(lhs);
     const degrees: number[] = [];
+    let isExponential = false;
 
-    node.traverse((child: MathNode) => {
+    node.traverse((child: MathNode, path, parent) => {
       if (isOperatorNode(child) && child.op === '^') {
+        const base = child.args[0];
         const exp = child.args[1];
+
+        // Detectar exponencial: exponente es símbolo
+        if (exp.type === 'SymbolNode') {
+          isExponential = true;
+        }
+
+        // Detectar grado de polinomio: exponente constante
         if (isConstantNode(exp)) {
           const value = exp.value;
           if (typeof value === 'string') {
@@ -38,8 +46,12 @@ export function detectEquationType(expression: string): EquationType {
         }
       }
 
-      if (child.type === 'SymbolNode') {
-        degrees.push(1); // x es grado 1 si no tiene exponente explícito
+      // Detectar x sin exponente (sólo si no está como exponente)
+      if (
+        child.type === 'SymbolNode' &&
+        (!parent || !(isOperatorNode(parent) && parent.op === '^' && parent.args[1] === child))
+      ) {
+        degrees.push(1);
       }
     });
 
@@ -47,17 +59,7 @@ export function detectEquationType(expression: string): EquationType {
 
     if (maxDegree === 1) return 'lineal';
     if (maxDegree === 2) return 'cuadratica';
-
-    let isExponential = false;
-    node.traverse((child: MathNode) => {
-      if (isOperatorNode(child) && child.op === '^') {
-        const exp = child.args[1];
-        if (exp.type === 'SymbolNode') {
-          isExponential = true;
-        }
-      }
-    });
-
+    if (maxDegree === 3) return 'cubica';
     if (isExponential) return 'exponencial';
 
     return 'desconocida';
@@ -65,3 +67,9 @@ export function detectEquationType(expression: string): EquationType {
     return 'desconocida';
   }
 }
+
+// console.log(detectEquationType('x^3 + 2x^2 + x + 1 = 0')); // cubica
+// console.log(detectEquationType('2x^2 - 4x + 1 = 0')); // cuadratica
+// console.log(detectEquationType('3x + 1 = 0')); // lineal
+// console.log(detectEquationType('2^x + 3 = 0')); // exponencial
+// console.log(detectEquationType('log(x) = 1')); // desconocida

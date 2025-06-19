@@ -3,6 +3,7 @@ import { AlgebraRule } from '../AlgebraRule';
 import { SolveLinearStepRule } from '../solvers/SolveEquationLinear';
 import { SolveQuadraticStepRule } from './SolveEquationQuadratic';
 import { SolveCubicStepRule } from './SolveEquationCubic';
+import { SolveExponentialStepRule } from './SolveExponentialStepRule';
 
 
 /**
@@ -14,6 +15,7 @@ import { SolveCubicStepRule } from './SolveEquationCubic';
 export const algebraSolvers: Record<EquationType, AlgebraRule[]> = {
     lineal: [new SolveLinearStepRule()],
     cuadratica: [new SolveQuadraticStepRule()],
-    exponencial: [new SolveCubicStepRule()],
+    cubica: [new SolveCubicStepRule()],
+    exponencial: [new SolveExponentialStepRule()],
     desconocida: [],
 };

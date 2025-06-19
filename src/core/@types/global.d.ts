@@ -3,7 +3,7 @@
 
 // Declaramos el módulo 'react-native-math-view' para que TypeScript lo reconozca
 declare module 'react-native-math-view' {
-    
+
     // Importamos React.Component, ya que el módulo exporta un componente de clase
     import { Component } from 'react';
 
@@ -24,8 +24,8 @@ declare module 'react-native-math-view' {
 
     // Exportamos por defecto el componente MathView, que extiende de React.Component
     // y utiliza la interfaz de props definida anteriormente
-    export default class MathView extends Component<MathViewProps> {}
+    export default class MathView extends Component<MathViewProps> { }
 }
 
 
-export type EquationType = 'lineal' | 'cuadratica' | 'exponencial' | 'desconocida';
+export type EquationType = 'lineal' | 'cuadratica' | 'exponencial' | 'cubica' | 'desconocida';

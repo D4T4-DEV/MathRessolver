@@ -1,6 +1,8 @@
 import { EquationType } from '@/core/@types/global';
 import { AlgebraRule } from '../AlgebraRule';
 import { SolveLinearStepRule } from '../solvers/SolveEquationLinear';
+import { SolveQuadraticStepRule } from './SolveEquationQuadratic';
+import { SolveCubicStepRule } from './SolveEquationCubic';
 
 
 /**
@@ -11,7 +13,7 @@ import { SolveLinearStepRule } from '../solvers/SolveEquationLinear';
  */
 export const algebraSolvers: Record<EquationType, AlgebraRule[]> = {
     lineal: [new SolveLinearStepRule()],
-    cuadratica: [],
-    exponencial: [],
+    cuadratica: [new SolveQuadraticStepRule()],
+    exponencial: [new SolveCubicStepRule()],
     desconocida: [],
 };

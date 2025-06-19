@@ -22,10 +22,9 @@ export class SolveCubicStepRule implements AlgebraRule {
      * Aplica la regla paso a paso sobre una ecuación cúbica del tipo ax^3 + bx^2 + cx + d = 0.
      * 
      * @param expression - La ecuación cúbica (formato: 'ax^3 + bx^2 + cx + d = 0')
-     * @returns Resultado parcial o final del paso aplicado
+     * @returns Resultado parcial o final del paso aplicado con su descripcion
      */
     apply(expression: string): RuleResult {
-        // Paso 0: Inicializar si es la primera vez
         if (this.stepIndex === 0) {
             const parts = expression.split('=').map(s => s.trim());
             if (parts.length !== 2) return { result: expression };
@@ -37,40 +36,45 @@ export class SolveCubicStepRule implements AlgebraRule {
         }
 
         if (this.done) {
-            return { result: this.currentExpr, isFinal: true };
+            return {
+                result: this.currentExpr,
+                isFinal: true,
+                description: "Hemos encontrado todas las soluciones de la ecuación cúbica."
+            };
         }
 
         let resultStep: string | null = null;
+        let description = '';
 
         switch (this.stepIndex) {
             case 0:
-                // Paso 1: Mostrar la ecuación expandida
                 resultStep = `${this.lhs} = ${this.rhs}`;
+                description = "Mostramos la ecuación cúbica en su forma expandida y simplificada.";
                 break;
 
             case 1:
-                // Paso 2: Llevar todo al lado izquierdo
                 this.currentExpr = `(${this.lhs}) - (${this.rhs}) = 0`;
                 resultStep = this.currentExpr;
+                description = "Movemos todos los términos al lado izquierdo para igualar a cero.";
                 break;
 
             case 2:
-                // Paso 3: Expandir y simplificar
                 const simplified = nerdamer(this.currentExpr).expand().toString();
                 this.currentExpr = `${simplified} = 0`;
                 resultStep = this.currentExpr;
+                description = "Expandimos y simplificamos la expresión para agrupar términos semejantes.";
                 break;
 
             case 3:
-                // Paso 4: Resolver con nerdamer
                 const cubicExpr = this.currentExpr.split('=')[0].trim();
                 const roots = nerdamer.solve(cubicExpr, this.variable);
 
-                // Formatea múltiples soluciones
                 if (roots.length > 1) {
                     resultStep = roots.map((r: any, i: number) => `x${i + 1} = ${r.text()}`).join(', ');
+                    description = "Calculamos las tres soluciones (raíces) de la ecuación cúbica.";
                 } else {
                     resultStep = `x = ${roots.text()}`;
+                    description = "Calculamos la solución de la ecuación cúbica.";
                 }
 
                 this.done = true;
@@ -82,6 +86,7 @@ export class SolveCubicStepRule implements AlgebraRule {
         return {
             result: resultStep ?? expression,
             isFinal: this.done,
+            description,
         };
     }
 }

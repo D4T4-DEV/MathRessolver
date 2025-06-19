@@ -27,59 +27,60 @@ export class SolveLinearStepRule implements AlgebraRule {
    * @returns El resultado parcial o final del paso aplicado
    */
   apply(expression: string): RuleResult {
-    // Paso 0: Inicialización (solo en la primera llamada)
     if (this.stepIndex === 0) {
-      const parts = expression.split('=').map(s => s.trim()); // Divide LHS y RHS
-      if (parts.length !== 2) return { result: expression };  // Validación
+      const parts = expression.split('=').map(s => s.trim());
+      if (parts.length !== 2) return { result: expression };
 
-      // Expande ambos lados de la ecuación
       this.lhs = nerdamer(parts[0]).expand().toString();
       this.rhs = nerdamer(parts[1]).expand().toString();
       this.currentExpr = `${this.lhs} = ${this.rhs}`;
-      this.done = false; // Reinicia bandera de finalización
+      this.done = false;
     }
 
-    // Si ya se resolvió, devuelve el resultado final
     if (this.done) {
-      return { result: this.currentExpr, isFinal: true };
+      return {
+        result: this.currentExpr,
+        isFinal: true,
+        description: "Hemos llegado a la solución final de la ecuación lineal."
+      };
     }
 
     let resultStep: string | null = null;
+    let description: string = '';
 
-    // Ejecuta el paso correspondiente según stepIndex
     switch (this.stepIndex) {
       case 0:
-        // Paso 1: Mostrar la ecuación simplificada
         resultStep = `${this.lhs} = ${this.rhs}`;
+        description = `Expresamos la ecuación original con ambos lados simplificados.`;
         break;
 
       case 1:
-        // Paso 2: Reescribir en forma estándar: (lhs - rhs) = 0
         this.currentExpr = `(${this.lhs}) - (${this.rhs}) = 0`;
         resultStep = this.currentExpr;
+        description = `Restamos ambos lados de la ecuación para llevarla a la forma estándar: (LHS - RHS) = 0.`;
         break;
 
       case 2:
-        // Paso 3: Expandir y simplificar la expresión resultante
-        this.currentExpr = nerdamer(this.currentExpr).expand().toString() + ' = 0';
+        const simplified = nerdamer(this.currentExpr).expand().toString();
+        this.currentExpr = simplified + ' = 0';
         resultStep = this.currentExpr;
+        description = `Expandimos y simplificamos la expresión para agrupar todos los términos en un solo lado.`;
         break;
 
       case 3:
-        // Paso 4: Resolver para x usando nerdamer.solve
         const solutions = nerdamer.solve(`${this.lhs} - (${this.rhs})`, 'x');
-        resultStep = `x = ${solutions.text()}`; // Solución final
-        this.done = true; // Marca como finalizado
+        resultStep = `x = ${solutions.text()}`;
+        description = `Resolvemos la ecuación para x, obteniendo la solución final.`;
+        this.done = true;
         break;
     }
 
-    // Avanza al siguiente paso para la próxima llamada
     this.stepIndex++;
 
-    // Devuelve el resultado del paso actual
     return {
       result: resultStep ?? expression,
       isFinal: this.done,
+      description,
     };
   }
 }

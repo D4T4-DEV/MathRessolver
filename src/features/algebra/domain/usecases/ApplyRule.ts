@@ -16,7 +16,7 @@ export class ApplyRule {
         const { laTex: latexAfter = '' } = this.transformToLatexUseCase.execute(ruleResult.result);
 
         return {
-            description: rule.name,
+            description: ruleResult.description ?? 'Guiate del movimiento',
             latexBefore,
             latexAfter,
             ruleName: rule.name,

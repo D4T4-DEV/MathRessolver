@@ -38,21 +38,28 @@ export class SolveQuadraticStepRule implements AlgebraRule {
         }
 
         if (this.done) {
-            return { result: this.currentExpr, isFinal: true };
+            return {
+                result: this.currentExpr,
+                isFinal: true,
+                description: "Hemos obtenido la(s) solución(es) final(es) de la ecuación cuadrática."
+            };
         }
 
         let resultStep: string | null = null;
+        let description = '';
 
         switch (this.stepIndex) {
             case 0:
                 // Paso 1: Mostrar forma expandida
                 resultStep = `${this.lhs} = ${this.rhs}`;
+                description = "Mostramos la ecuación cuadrática en su forma expandida y simplificada.";
                 break;
 
             case 1:
                 // Paso 2: Llevar todo al lado izquierdo: lhs - rhs = 0
                 this.currentExpr = `(${this.lhs}) - (${this.rhs}) = 0`;
                 resultStep = this.currentExpr;
+                description = "Trasladamos todos los términos al lado izquierdo para igualar a cero.";
                 break;
 
             case 2:
@@ -60,15 +67,20 @@ export class SolveQuadraticStepRule implements AlgebraRule {
                 const simplified = nerdamer(this.currentExpr).expand().toString();
                 this.currentExpr = `${simplified} = 0`;
                 resultStep = this.currentExpr;
+                description = "Expandimos y simplificamos la expresión para agrupar términos semejantes.";
                 break;
 
             case 3:
                 // Paso 4: Resolver para x
                 const polyExpr = this.currentExpr.split('=')[0].trim();
                 const solution = nerdamer.solve(polyExpr, this.variable);
-                resultStep = solution.length > 1
-                    ? `x₁ = ${solution.get(0).text()}, x₂ = ${solution.get(1).text()}`
-                    : `x = ${solution.text()}`;
+                if (solution.length > 1) {
+                    resultStep = `x₁ = ${solution.get(0).text()}, x₂ = ${solution.get(1).text()}`;
+                    description = "Encontramos las dos soluciones reales para la variable x.";
+                } else {
+                    resultStep = `x = ${solution.text()}`;
+                    description = "Encontramos la solución para la variable x.";
+                }
                 this.done = true;
                 break;
         }
@@ -78,6 +90,7 @@ export class SolveQuadraticStepRule implements AlgebraRule {
         return {
             result: resultStep ?? expression,
             isFinal: this.done,
+            description,
         };
     }
 }

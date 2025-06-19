@@ -5,6 +5,7 @@ import { useEquationSolverViewModel } from '../../viewmodels/useEquationSolver';
 
 export const EquationSolverScreen = () => {
     const { input, setInput, steps, solve } = useEquationSolverViewModel();
+    console.log(steps);
 
     return (
         <SolverTemplate input={input} setInput={setInput} onSolve={solve} steps={steps} />

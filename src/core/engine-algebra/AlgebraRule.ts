@@ -22,4 +22,5 @@ export interface AlgebraRule {
 export interface RuleResult {
     result: string;
     isFinal?: boolean;
+    description?: string;
 }

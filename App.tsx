@@ -1,17 +1,32 @@
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
+import { EquationSolverScreen } from '@/features/algebra/application/ui/screens/EquationSolverScreen';
+
+// Componente para poder ser modificarlo sin 
+// afectar al componente de entrada "App"
+function AppContent() {
+  return (
+    <SafeAreaView style={styles.childContainer} edges={['top', 'bottom']}>
+      <StatusBar style='inverted' />
+      <EquationSolverScreen />
+    </SafeAreaView>
+  );
+}
+
+// Componente principal de la aplicacion
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaProvider>
+      <AppContent />
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  childContainer: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',

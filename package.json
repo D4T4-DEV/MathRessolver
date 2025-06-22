@@ -19,8 +19,9 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-katex": "^3.1.0",
-    "react-native": "0.79.3",
+    "react-native": "^0.79.4",
     "react-native-math-view": "^3.9.5",
+    "react-native-safe-area-context": "^5.4.1",
     "react-native-web": "^0.20.0"
   },
   "devDependencies": {

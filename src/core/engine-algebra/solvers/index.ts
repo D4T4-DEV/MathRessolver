@@ -12,10 +12,10 @@ import { SolveExponentialStepRule } from './SolveExponentialStepRule';
  * Estas reglas implementan la interfaz AlgebraRule y pueden ser aplicadas
  * en secuencia o de forma individual para manipular expresiones algebraicas.
  */
-export const algebraSolvers: Record<EquationType, AlgebraRule[]> = {
-    lineal: [new SolveLinearStepRule()],
-    cuadratica: [new SolveQuadraticStepRule()],
-    cubica: [new SolveCubicStepRule()],
-    exponencial: [new SolveExponentialStepRule()],
+export const algebraSolversFactory: Record<EquationType, (() => AlgebraRule)[]> = {
+    lineal: [() => new SolveLinearStepRule()],
+    cuadratica: [() => new SolveQuadraticStepRule()],
+    cubica: [() => new SolveCubicStepRule()],
+    exponencial: [() => new SolveExponentialStepRule()],
     desconocida: [],
 };

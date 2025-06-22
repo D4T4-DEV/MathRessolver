@@ -9,12 +9,14 @@ export const useEquationSolverViewModel = () => {
     const [input, setInput] = useState('');
     const [steps, setSteps] = useState<EquationStep[]>([]);
     const [equationType, setEquationType] = useState<EquationType>('desconocida');
+    const [hasTriedToSolve, setHasTriedToSolve] = useState(false);
 
     const detectTypeUseCase = useMemo(() => new DetecTypeExpressionAlgebraUseCase(), []);
 
     const solve = () => {
         if (!input.trim()) return;
 
+        setHasTriedToSolve(true);
         const tipo = detectTypeUseCase.execute(input);
         setEquationType(tipo);
 
@@ -50,5 +52,7 @@ export const useEquationSolverViewModel = () => {
         steps,
         solve,
         equationType,
+        hasTriedToSolve,
+        setHasTriedToSolve
     };
 };

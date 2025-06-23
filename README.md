@@ -69,23 +69,23 @@ Y listo, ya cuentas con el proyecto corriendo en los medios compatiblesa (●'�
 ### Notas:
 Esta aplicación resuelve ecuaciones matematicas de los tipos:
 - Lineales:
-$$
+```math
 ax + bx + c = 0
-$$
-$$
+```
+```math
 ax + b = cx + d
-$$
+```
 - Cuadráticas:
-$$
+```math
 ax^2 + bx + c = 0
-$$
+```
 - Cúbicas:
-$$
+```math
 ax^3 + bx^2 + cx + d = 0
-$$
+```
 - Exponenciales:
-$$
+```math
  a * b^x = c
-$$
+```
 
 Las reglas están implementadas con nerdamer para el manejo simbólico.

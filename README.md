@@ -64,4 +64,28 @@ Para web, simplemente bastará que ejecutes el siguiente comando una vez instala
 npx expo start --web
 ```
 
-Y listo, ya cuentas con el proyecto corriendo en los medios compatibles (●'◡'●)
+Y listo, ya cuentas con el proyecto corriendo en los medios compatiblesa (●'◡'●)
+
+### Notas:
+Esta aplicación resuelve ecuaciones matematicas de los tipos:
+- Lineales:
+$$
+ax + bx + c = 0
+$$
+$$
+ax + b = cx + d
+$$
+- Cuadráticas:
+$$
+ax^2 + bx + c = 0
+$$
+- Cúbicas:
+$$
+ax^3 + bx^2 + cx + d = 0
+$$
+- Exponenciales:
+$$
+ a * b^x = c
+$$
+
+Las reglas están implementadas con nerdamer para el manejo simbólico.

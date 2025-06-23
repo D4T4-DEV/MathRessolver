@@ -25,7 +25,7 @@ const nerdamer = nerdamerImport as any;
  * Implementa la interfaz AlgebraRule para integrarse en el motor algebraico.
  */
 export class SolveExponentialStepRule implements AlgebraRule {
-    name = "Resolver Ecuación Exponencial Paso a Paso";
+    name = "Resolución Detallada de Ecuación Exponencial";
 
     // Índice del paso actual (incrementa con cada llamada a apply)
     private stepIndex = 0;
@@ -63,6 +63,11 @@ export class SolveExponentialStepRule implements AlgebraRule {
 
             this.lhs = nerdamer(parts[0]).toString();
             this.rhs = nerdamer(parts[1]).toString();
+
+            // Buscar la variable 
+            // const variableMatch = expression.match(/[a-zA-Z]/);
+            // this.variable = variableMatch ? variableMatch[0] : 'x'; // si no se encuetra pone la defecto X
+
             this.currentExpr = `${this.lhs} = ${this.rhs}`;
             this.done = false;
         }
@@ -83,7 +88,7 @@ export class SolveExponentialStepRule implements AlgebraRule {
             case 0:
                 // Paso 1: Mostrar la ecuación original
                 resultStep = this.currentExpr;
-                description = "Mostramos la ecuación exponencial original.";
+                description = `Paso 1: Escribimos la ecuación original. Queremos encontrar el valor de ${this.variable} en una expresión exponencial.`;
                 break;
 
             case 1:
@@ -94,7 +99,7 @@ export class SolveExponentialStepRule implements AlgebraRule {
                     return {
                         result: 'Ecuación exponencial no compatible',
                         isFinal: true,
-                        description: "La ecuación no tiene el formato esperado para esta regla."
+                        description: `La ecuación no tiene el formato esperado (a * b^x = c). Asegúrate de que esté en esa forma para aplicar esta regla.`,
                     };
                 }
 
@@ -105,7 +110,9 @@ export class SolveExponentialStepRule implements AlgebraRule {
                 const simplified = nerdamer(`${this.rhs} / ${this.coefficient}`).toString();
                 this.currentExpr = `${this.base}^${exponent} = ${simplified}`;
                 resultStep = this.currentExpr;
-                description = `Dividimos ambos lados entre el coeficiente ${this.coefficient} para aislar la potencia exponencial.`;
+                description =
+                    `Paso 2: Dividimos ambos lados de la ecuación entre el coeficiente ${this.coefficient} para aislar la potencia ${this.base}^${exponent}. ` +
+                    `Esto nos permite tener la potencia sola en un lado, facilitando el siguiente paso.`;
                 break;
 
             case 2:
@@ -113,7 +120,10 @@ export class SolveExponentialStepRule implements AlgebraRule {
                 const rightSide = this.currentExpr.split('=')[1].trim();
                 this.currentExpr = `${this.variable} * log(${this.base}) = log(${rightSide})`;
                 resultStep = this.currentExpr;
-                description = `Aplicamos logaritmo en ambos lados para bajar el exponente y poder despejar ${this.variable}.`;
+                description =
+                    `Paso 3: Aplicamos logaritmo en ambos lados de la ecuación. ` +
+                    `Esto aprovecha la propiedad logarítmica: log(b^x) = x * log(b), lo cual nos permite bajar el exponente ` +
+                    `y transformar la ecuación exponencial en una ecuación lineal.`;
                 break;
 
             case 3:
@@ -124,7 +134,10 @@ export class SolveExponentialStepRule implements AlgebraRule {
 
                 this.currentExpr = `${this.variable} = ${result}`;
                 resultStep = this.currentExpr;
-                description = `Despejamos ${this.variable} dividiendo logaritmos para obtener la solución final.`;
+                description =
+                    `Paso 4: Finalmente despejamos ${this.variable} dividiendo ambos lados entre log(${this.base}). ` +
+                    `Aplicamos la fórmula: x = log(${simplifiedValue}) / log(${this.base}). ` +
+                    `Este es el valor final de la incógnita.`;
                 this.done = true;
                 break;
         }

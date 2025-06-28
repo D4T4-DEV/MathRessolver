@@ -25,8 +25,7 @@ interface SolverTemplateProps {
  * Componente de presentación que muestra:
  * - Un formulario para ingresar ecuaciones algebraicas.
  * - La regla aplicada al resolver.
- * - La lista de pasos intermedios, mostrando "Antes" y "Después" en cada uno,
- *   excepto en el último paso que solo muestra la descripción.
+ * - La lista de pasos intermedios con representación en LaTeX y explicación desplegable.
  */
 export const SolverTemplate = ({
     input,
@@ -38,16 +37,18 @@ export const SolverTemplate = ({
     return (
         <View style={styles.fullScreen}>
             <ScrollView contentContainerStyle={styles.scrollContent}>
+
+                {/* Formulario para introducir la ecuación y activar la resolución */}
                 <EquationSolverForm input={input} setInput={setInput} onSolve={onSolve} />
 
-                {/* Mensaje de error si no se pudieron generar pasos */}
+                {/* Mensaje de error cuando no se generan pasos y el usuario ya intentó resolver */}
                 {hasTriedToSolve && steps.length === 0 && (
                     <View style={styles.container}>
                         <Text>No entiendo la ecuación proporcionada :(</Text>
                     </View>
                 )}
 
-                {/* Mensaje para saber que regla usa */}
+                {/* Muestra la primera regla aplicada si hay pasos disponibles */}
                 {steps.length > 0 && (
                     <View style={styles.container}>
                         <Text>Regla aplicada:</Text>
@@ -55,18 +56,18 @@ export const SolverTemplate = ({
                     </View>
                 )}
 
-                {/* Renderizado de los pasos */}
-
-                {/* Renderizado de los pasos intermedios */}
+                {/* Iteración sobre los pasos de resolución */}
                 {steps.map((step, index) => {
                     const isLastStep = index === steps.length - 1;
 
                     return (
                         <View key={index} style={styles.container}>
-
+                            {/* Pasos intermedios, antes del resultado final */}
                             {!isLastStep && (
                                 <View style={styles.container}>
-                                    <Text style={{ fontWeight: 'bold', marginTop: 20 }}>Paso {index + 1}:</Text>
+                                    <Text style={{ fontWeight: 'bold', marginTop: 20 }}>
+                                        Paso {index + 1}:
+                                    </Text>
 
                                     <Text>Antes:</Text>
                                     <MathRenderer math={step.latexBefore} style={styles.mathContainer} />
@@ -74,16 +75,20 @@ export const SolverTemplate = ({
                                     <Text>Después:</Text>
                                     <MathRenderer math={step.latexAfter} style={styles.mathContainer} />
 
-                                    <AccordionItem title={`Explicame el paso ${index + 1}`}>
+                                    {/* Acordeón con la descripción del paso */}
+                                    <AccordionItem title={`Explícame el paso ${index + 1}`}>
                                         <Text style={{ fontStyle: 'italic', marginBottom: 4 }}>
                                             {step.description}
                                         </Text>
                                     </AccordionItem>
                                 </View>
                             )}
+
+                            {/* Último paso o conclusión */}
                             {isLastStep && (
                                 <View>
                                     <Text style={{ fontWeight: 'bold', marginTop: 20 }}>Dato importante</Text>
+
                                     <AccordionItem title={`Dato importante de resolución`}>
                                         <Text style={{ fontStyle: 'italic', marginBottom: 4 }}>
                                             {step.description}
@@ -91,8 +96,7 @@ export const SolverTemplate = ({
                                         <MathRenderer math={step.latexBefore} style={styles.mathContainer} />
                                     </AccordionItem>
                                 </View>
-                            )
-                            }
+                            )}
                         </View>
                     );
                 })}
@@ -101,21 +105,24 @@ export const SolverTemplate = ({
     );
 };
 
+/**
+ * Estilos del componente SolverTemplate.
+ */
 const styles = StyleSheet.create({
     fullScreen: {
         flex: 1,
-        backgroundColor: 'white'
+        backgroundColor: '#ffff' 
     },
     scrollContent: {
         padding: 16,
-        paddingBottom: 32
+        paddingBottom: 32 
     },
     container: {
-        marginVertical: 8
+        marginVertical: 8 
     },
     mathContainer: {
         marginTop: 4,
         alignSelf: 'center',
-        width: 200
+        width: 200 
     }
 });

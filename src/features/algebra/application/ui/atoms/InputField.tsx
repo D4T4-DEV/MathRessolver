@@ -13,6 +13,7 @@ export const InputField = ({ value, onChange }: InputFieldProps) => (
         value={value}
         onChangeText={onChange}
         placeholder="Introduce una ecuación"
+        placeholderTextColor={'#9C9C9C'}
     />
 );
 

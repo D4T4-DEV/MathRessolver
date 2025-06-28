@@ -3,6 +3,7 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { EquationSolverForm } from '../organisms/EquationSolverForm';
 import { EquationStep } from '@/features/algebra/domain/entities/EquationStep';
 import MathRenderer from '@/shared/ui/atoms/MathRenderer';
+import { AccordionItem } from '@/shared/ui/organisms/AccordionItem';
 
 /**
  * Props esperadas por el componente SolverTemplate.
@@ -55,11 +56,6 @@ export const SolverTemplate = ({
                 )}
 
                 {/* Renderizado de los pasos */}
-                {steps.length > 0 && (
-                    <View style={styles.container}>
-                        <Text style={{ fontWeight: 'bold', marginTop: 20 }}>Pasos:</Text>
-                    </View>
-                )}
 
                 {/* Renderizado de los pasos intermedios */}
                 {steps.map((step, index) => {
@@ -67,19 +63,36 @@ export const SolverTemplate = ({
 
                     return (
                         <View key={index} style={styles.container}>
-                            <Text style={{ fontStyle: 'italic', marginBottom: 4 }}>
-                                {step.description}
-                            </Text>
 
                             {!isLastStep && (
                                 <View style={styles.container}>
+                                    <Text style={{ fontWeight: 'bold', marginTop: 20 }}>Paso {index + 1}:</Text>
+
                                     <Text>Antes:</Text>
                                     <MathRenderer math={step.latexBefore} style={styles.mathContainer} />
 
                                     <Text>Después:</Text>
                                     <MathRenderer math={step.latexAfter} style={styles.mathContainer} />
+
+                                    <AccordionItem title={`Explicame el paso ${index + 1}`}>
+                                        <Text style={{ fontStyle: 'italic', marginBottom: 4 }}>
+                                            {step.description}
+                                        </Text>
+                                    </AccordionItem>
                                 </View>
                             )}
+                            {isLastStep && (
+                                <View>
+                                    <Text style={{ fontWeight: 'bold', marginTop: 20 }}>Dato importante</Text>
+                                    <AccordionItem title={`Dato importante de resolución`}>
+                                        <Text style={{ fontStyle: 'italic', marginBottom: 4 }}>
+                                            {step.description}
+                                        </Text>
+                                        <MathRenderer math={step.latexBefore} style={styles.mathContainer} />
+                                    </AccordionItem>
+                                </View>
+                            )
+                            }
                         </View>
                     );
                 })}

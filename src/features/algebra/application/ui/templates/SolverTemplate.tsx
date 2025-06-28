@@ -111,18 +111,18 @@ export const SolverTemplate = ({
 const styles = StyleSheet.create({
     fullScreen: {
         flex: 1,
-        backgroundColor: '#ffff' 
+        backgroundColor: '#ffff'
     },
     scrollContent: {
         padding: 16,
-        paddingBottom: 32 
+        paddingBottom: 32
     },
     container: {
-        marginVertical: 8 
+        marginVertical: 8
     },
     mathContainer: {
         marginTop: 4,
         alignSelf: 'center',
-        width: 200 
+        width: 200
     }
 });

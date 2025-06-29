@@ -14,6 +14,7 @@ import { useEquationSolverViewModel } from '../../viewmodels/useEquationSolver';
  * - La función `solve` para resolver la ecuación.
  * - La lista de pasos de resolución.
  * - El indicador de intento de resolución.
+ * - El status de la resolución.
  * 
  * Luego, pasa esos datos al componente de presentación `SolverTemplate`.
  */
@@ -23,7 +24,8 @@ export const EquationSolverScreen = () => {
         setInput,
         steps,
         solve,
-        hasTriedToSolve
+        hasTriedToSolve,
+        statusResolver
     } = useEquationSolverViewModel();
 
     return (
@@ -33,6 +35,7 @@ export const EquationSolverScreen = () => {
             onSolve={solve}
             steps={steps}
             hasTriedToSolve={hasTriedToSolve}
+            isResolving={statusResolver}
         />
     );
 };

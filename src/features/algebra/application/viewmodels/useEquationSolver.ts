@@ -13,6 +13,9 @@ export const useEquationSolverViewModel = () => {
     // Estado que almacena la expresión ingresada por el usuario
     const [input, setInput] = useState('');
 
+    // Estado que almacena el status de la operacion de resolucion
+    const [statusResolver, setStatusResolver] = useState(false);
+
     // Lista de pasos intermedios para resolver la ecuación
     const [steps, setSteps] = useState<EquationStep[]>([]);
 
@@ -29,11 +32,14 @@ export const useEquationSolverViewModel = () => {
      * Función que se encarga de resolver la ecuación ingresada.
      * Detecta el tipo, aplica los solvers adecuados y genera los pasos de transformación.
      */
-    const solve = () => {
+    const solve = async () => {
         // Evita procesar si la entrada está vacía o solo tiene espacios
         if (!input.trim()) return;
 
         setHasTriedToSolve(true); // Marca que el usuario intentó resolver algo
+        setStatusResolver(true); // Marca que se esta tratando de resolver algo
+
+        await new Promise(resolve => setTimeout(resolve, 0)); // Forza un reenderizado utilizado para mostrar la carga
 
         // Detecta el tipo de ecuación
         const tipo = detectTypeUseCase.execute(input);
@@ -73,6 +79,7 @@ export const useEquationSolverViewModel = () => {
         // Guarda los pasos generados y limpia la entrada
         setSteps(newSteps);
         setInput('');
+        setStatusResolver(false);
     };
 
     // Retorna el estado y funciones necesarias para el componente de presentación (UI)
@@ -83,6 +90,7 @@ export const useEquationSolverViewModel = () => {
         solve,
         equationType,
         hasTriedToSolve,
-        setHasTriedToSolve
+        setHasTriedToSolve,
+        statusResolver
     };
 };

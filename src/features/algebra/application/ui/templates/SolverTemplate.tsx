@@ -12,6 +12,7 @@ import { AccordionItem } from '@/shared/ui/organisms/AccordionItem';
  * - onSolve: callback que se ejecuta al presionar "resolver".
  * - steps: lista de pasos intermedios generados por el motor de resolución.
  * - hasTriedToSolve: indica si el usuario intentó resolver al menos una vez.
+ * - isResolving: indica si la operación está en curso (true = mostrando carga).
  */
 interface SolverTemplateProps {
     input: string;
@@ -19,6 +20,7 @@ interface SolverTemplateProps {
     onSolve: () => void;
     steps: EquationStep[];
     hasTriedToSolve: boolean;
+    isResolving: boolean;
 }
 
 /**
@@ -32,17 +34,18 @@ export const SolverTemplate = ({
     setInput,
     onSolve,
     steps,
-    hasTriedToSolve
+    hasTriedToSolve,
+    isResolving
 }: SolverTemplateProps) => {
     return (
         <View style={styles.fullScreen}>
             <ScrollView contentContainerStyle={styles.scrollContent}>
 
                 {/* Formulario para introducir la ecuación y activar la resolución */}
-                <EquationSolverForm input={input} setInput={setInput} onSolve={onSolve} />
+                <EquationSolverForm input={input} setInput={setInput} onSolve={onSolve} isResolving={isResolving} />
 
                 {/* Mensaje de error cuando no se generan pasos y el usuario ya intentó resolver */}
-                {hasTriedToSolve && steps.length === 0 && (
+                {hasTriedToSolve && steps.length === 0 && isResolving === false && (
                     <View style={styles.containerDescip}>
                         <Text>No entiendo la ecuación proporcionada :(</Text>
                     </View>

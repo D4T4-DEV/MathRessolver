@@ -43,16 +43,16 @@ export const SolverTemplate = ({
 
                 {/* Mensaje de error cuando no se generan pasos y el usuario ya intentó resolver */}
                 {hasTriedToSolve && steps.length === 0 && (
-                    <View style={styles.container}>
+                    <View style={styles.containerDescip}>
                         <Text>No entiendo la ecuación proporcionada :(</Text>
                     </View>
                 )}
 
                 {/* Muestra la primera regla aplicada si hay pasos disponibles */}
                 {steps.length > 0 && (
-                    <View style={styles.container}>
+                    <View style={styles.containerDescip}>
                         <Text>Regla aplicada:</Text>
-                        <Text>{steps[0].ruleName}</Text>
+                        <Text style={styles.ruleAppy}>{steps[0].ruleName}</Text>
                     </View>
                 )}
 
@@ -124,5 +124,12 @@ const styles = StyleSheet.create({
         marginTop: 4,
         alignSelf: 'center',
         width: 200
+    },
+    ruleAppy: {
+        fontSize: 16,
+        fontWeight: '700'
+    },
+    containerDescip: {
+        marginTop: 10
     }
 });

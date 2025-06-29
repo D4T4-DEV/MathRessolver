@@ -10,7 +10,7 @@ import { EquationSolverScreen } from '@/features/algebra/application/ui/screens/
 function AppContent() {
   return (
     <SafeAreaView style={styles.childContainer} edges={['top', 'bottom']}>
-      <StatusBar style='auto' />
+      <StatusBar style='dark' />
       <EquationSolverScreen />
     </SafeAreaView>
   );

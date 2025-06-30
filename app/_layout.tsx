@@ -26,8 +26,7 @@ const RootLayout = () => {
             />
             <Stack.Screen name='history'
                 options={{
-                    title: '',
-                    headerShown: false
+                    title: ''
                 }}
             />
         </Stack>

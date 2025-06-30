@@ -10,7 +10,7 @@ import { EquationSolverScreen } from '@/features/algebra/application/ui/screens/
 function AppContent() {
   return (
     <SafeAreaView style={styles.childContainer} edges={['top', 'bottom']}>
-      <StatusBar style='inverted' />
+      <StatusBar style='dark' />
       <EquationSolverScreen />
     </SafeAreaView>
   );
@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
   childContainer: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
   },
 });

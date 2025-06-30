@@ -1,8 +1,12 @@
+import { EquationStorageRepositoryImpl } from "../data/repositories_impl/EquationStorageRepositoryImp";
 import { ExpresionRepositoryImpl } from "../data/repositories_impl/ExpressionRepositoryImp";
 import { ApplyRule } from "../domain/usecases/ApplyRule";
 import { ApplySolver } from "../domain/usecases/ApplySolver";
+import { DeleteEquationsSaved } from "../domain/usecases/DeleteEquationSaved";
 import { DetecTypeExpressionAlgebraUseCase } from "../domain/usecases/DetecTypeExpressionAlgebra";
 import { GetAvailableRulesUseCase } from "../domain/usecases/GetAvailableRules";
+import { LoadEquationSaved } from "../domain/usecases/LoadEquationSaved";
+import { SavedEquation } from "../domain/usecases/SavedEquation";
 // import { GetAvailableSolversUseCase } from "../domain/usecases/GetAvailableSolvers";
 import { TransformExpresionToLatex } from "../domain/usecases/TransformExpresionToLatex";
 
@@ -46,3 +50,27 @@ export const applyRuleUseCase = new ApplyRule(transformToLatexUseCase);
  * para mantener la expresión sincronizada en ese formato luego de aplicar la regla.
  */
 export const applySolverUseCase = new ApplySolver(transformToLatexUseCase);
+
+/**
+ * Instancia del repositorio para manejar el guardado, obtencion y eliminacion
+ * de la memoria usando AsyncStorage.
+ */
+const repoLocalSaved = new EquationStorageRepositoryImpl();
+
+/**
+ * Caso de uso para poder guardar una ecuacion solucionada en memoria
+ * en este caso haciendose valer de la implementacion dada.
+ */
+export const savedEquationUseCase = new SavedEquation(repoLocalSaved);
+
+/**
+ * Caso de uso para poder obtener las ecuaciones solucionadas y guardadas en memoria
+ * en este caso haciendose valer de la implementacion dada.
+ */
+export const loadEquationSavedUseCase = new LoadEquationSaved(repoLocalSaved);
+
+/**
+ * Caso de uso para poder borrar las ecuaciones solucionadas y guardadas en memoria
+ * en este caso haciendose valer de la implementacion dada.
+ */
+export const deleteEquationsSavedUseCase = new DeleteEquationsSaved(repoLocalSaved);

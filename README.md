@@ -64,4 +64,47 @@ Para web, simplemente bastará que ejecutes el siguiente comando una vez instala
 npx expo start --web
 ```
 
-Y listo, ya cuentas con el proyecto corriendo en los medios compatibles (●'◡'●)
+Y listo, ya cuentas con el proyecto corriendo en los medios compatiblesa (●'◡'●)
+
+### Notas:
+Esta aplicación resuelve ecuaciones matematicas de los tipos:
+- Lineales:
+```math
+ax + bx + c = 0
+```
+```math
+ax + b = cx + d
+```
+- Cuadráticas:
+```math
+ax^2 + bx + c = 0
+```
+- Cúbicas:
+```math
+ax^3 + bx^2 + cx + d = 0
+```
+- Exponenciales:
+```math
+ a * b^x = c
+```
+
+Las reglas están implementadas con nerdamer para el manejo simbólico.
+
+# Explicación de la aplicación
+Se utilizo lo solicitado por el profesor, siendo Atomic Desing, Clean Arquitecture, MVVM, ahora bien, en ¿dónde podemos observarlo?
+
+- En la carpeta Shared, podemos ver unos átomos, siendo estos los encargados de renderizar el LaTeX, y utilizados igualmente para poder renderizar correctamente el tipo dependiente de la plataforma, también se encuentra en `features/algebra/application/ui/`
+- En la carpeta `features/algebra/application/viewmodels/` se encuentran los viewmodels utilizados para darle vida a esta feature.
+- Clean se encuentra inmerso en todo el desarrollo del proyecto, ya que este está de base en `src` y en cada `features`, pero la cual no se es dependiente de ninguna carpeta en especial.
+- MVVM se encuentra en las `features`.
+
+## El motor algebraico
+Se utiliza dos librerías siendo:
+- `mathjs`
+- `nerdamer`
+
+De los cuales `mathjs` se utiliza para poder hacer la transformación de un AST a un LaTeX, las reglas que se puede utilizar, ahora bien
+`nerdamer` se utiliza para poder hacer las resoluciones paso a paso y dar el resultado correcto de las resoluciones.
+
+# Nota importante
+No te pases con los números que usarías para resolver algo, ya que puedes llegar a poner en muy mal rendimiento a tu teléfono o tu navegador, si estás pensando hacerlo, toma tus medidas de precaución q(≧▽≦q)

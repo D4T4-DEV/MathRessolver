@@ -105,3 +105,6 @@ Se utiliza dos librerías siendo:
 
 De los cuales `mathjs` se utiliza para poder hacer la transformación de un AST a un LaTeX, las reglas que se puede utilizar, ahora bien
 `nerdamer` se utiliza para poder hacer las resoluciones paso a paso y dar el resultado correcto de las resoluciones.
+
+# Nota importante
+No te pases con los números que usarías para resolver algo, ya que puedes llegar a poner en muy mal rendimiento a tu teléfono o tu navegador, si estás pensando hacerlo, toma tus medidas de precaución q(≧▽≦q)

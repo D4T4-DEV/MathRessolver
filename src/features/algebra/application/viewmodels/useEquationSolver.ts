@@ -1,9 +1,12 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { EquationStep } from '../../domain/entities/EquationStep';
 import { applySolverUseCase } from '../../di/container';
 import { algebraSolversFactory } from '@/core/engine-algebra/solvers';
 import { DetecTypeExpressionAlgebraUseCase } from '../../domain/usecases/DetecTypeExpressionAlgebra';
 import { EquationType } from '@/core/@types/global';
+import { LocalStorage } from '@/storage';
+import { EquationResolution } from '../../domain/entities/EquationResolution';
+import { keyToHistoryResolv } from '@/core/keys/localStorage';
 
 /**
  * Hook personalizado que actúa como ViewModel en una arquitectura MVVM.
@@ -19,6 +22,9 @@ export const useEquationSolverViewModel = () => {
     // Lista de pasos intermedios para resolver la ecuación
     const [steps, setSteps] = useState<EquationStep[]>([]);
 
+    // Historial guardado
+    const [history, setHistory] = useState<EquationResolution[]>([]);
+
     // Tipo de ecuación detectada (lineal, cuadrática, etc.)
     const [equationType, setEquationType] = useState<EquationType>('desconocida');
 
@@ -27,6 +33,14 @@ export const useEquationSolverViewModel = () => {
 
     // Caso de uso que detecta el tipo de ecuación; se memoriza para evitar múltiples instancias
     const detectTypeUseCase = useMemo(() => new DetecTypeExpressionAlgebraUseCase(), []);
+
+
+    useEffect(() => {
+        (async () => {
+            const savedHistory = await LocalStorage.load<EquationResolution[]>(keyToHistoryResolv) ?? [];
+            setHistory(savedHistory);
+        })();
+    }, []);
 
     /**
      * Función que se encarga de resolver la ecuación ingresada.
@@ -80,6 +94,19 @@ export const useEquationSolverViewModel = () => {
         setSteps(newSteps);
         setInput('');
         setStatusResolver(false);
+
+        // Genera un objeto de resolución
+        const resolution = { date: new Date().toISOString(), steps: newSteps }; // Objeto de resolucion
+        const updatedHistory = [resolution, ...history]; // se añade al objeto de historial
+
+        // Guardar en almacenamiento local los pasos generados
+        try {
+            setHistory(updatedHistory);
+            await LocalStorage.save('equationSolverSteps', updatedHistory);
+        } catch (error) {
+            console.error('Error guardando pasos localmente:', error);
+        }
+
     };
 
     // Retorna el estado y funciones necesarias para el componente de presentación (UI)

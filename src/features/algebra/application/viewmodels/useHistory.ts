@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { EquationResolution } from "../../domain/entities/EquationResolution";
-import { LocalStorage } from "@/storage";
-import { keyToHistoryResolv } from "@/core/keys/localStorage";
+import { deleteEquationsSavedUseCase, loadEquationSavedUseCase } from "../../di/container";
 
 export const useHistoryViewModel = () => {
     const [history, setHistory] = useState<EquationResolution[]>([]);
@@ -10,7 +9,7 @@ export const useHistoryViewModel = () => {
     useEffect(() => {
         (async () => {
             try {
-                const savedHistory = await LocalStorage.load<EquationResolution[]>(keyToHistoryResolv);
+                const savedHistory = await loadEquationSavedUseCase.execute();
                 if (savedHistory) setHistory(savedHistory);
             } catch (error) {
                 console.error('Error cargando historial:', error);
@@ -22,7 +21,7 @@ export const useHistoryViewModel = () => {
 
 
     const deleteHistory = async () => {
-        await LocalStorage.remove(keyToHistoryResolv);
+        await deleteEquationsSavedUseCase.execute();
         setHistory([]);
         setLoading(false);
     }

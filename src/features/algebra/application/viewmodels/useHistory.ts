@@ -20,8 +20,16 @@ export const useHistoryViewModel = () => {
         })();
     }, []);
 
+
+    const deleteHistory = async () => {
+        await LocalStorage.remove(keyToHistoryResolv);
+        setHistory([]);
+        setLoading(false);
+    }
+
     return {
         history,
-        loading
+        loading,
+        deleteHistory
     };
 };

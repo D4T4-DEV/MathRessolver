@@ -16,14 +16,14 @@ const RootLayout = () => {
                 options={{
                     title: '',
                     headerRight: () => (
-                        <HistoryButton onPress={() => { router.push('/history') }} sizeIcon={30} />
+                        <HistoryButton onPress={() => { router.replace('/history') }} sizeIcon={30} />
                     )
                 }}
             />
-            <Stack.Screen name='/history'
+            <Stack.Screen name='history'
                 options={{
                     title: '',
-                    
+                    headerShown: false
                 }}
             />
         </Stack>

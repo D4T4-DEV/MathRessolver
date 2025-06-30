@@ -148,10 +148,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffff'
     },
     actionsContainer: {
-        backgroundColor: 'red',
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingTop: 12,
         marginBottom: 8,
+        marginTop: 42,
     },
 });

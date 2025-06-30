@@ -21,7 +21,7 @@ interface EquationInputProps {
 export const EquationInput = ({ value, onChange }: EquationInputProps) => (
     <View>
         {/* Etiqueta del campo */}
-        <Text style={{ fontWeight: 'bold' }}>Ecuación:</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Ecuación:</Text>
 
         {/* Campo de entrada de texto */}
         <InputField value={value} onChange={onChange} />

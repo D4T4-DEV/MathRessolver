@@ -16,7 +16,11 @@ const RootLayout = () => {
                 options={{
                     title: '',
                     headerRight: () => (
-                        <HistoryButton onPress={() => { router.replace('/history') }} sizeIcon={30} />
+                        <HistoryButton
+                            onPress={() => {
+                                router.replace('/history')
+                            }}
+                        />
                     )
                 }}
             />

@@ -107,4 +107,6 @@ De los cuales `mathjs` se utiliza para poder hacer la transformación de un AST 
 `nerdamer` se utiliza para poder hacer las resoluciones paso a paso y dar el resultado correcto de las resoluciones.
 
 # Nota importante
-No te pases con los números que usarías para resolver algo, ya que puedes llegar a poner en muy mal rendimiento a tu teléfono o tu navegador, si estás pensando hacerlo, toma tus medidas de precaución q(≧▽≦q)
+No te pases con los números que usarías para resolver algo, ya que puedes llegar a poner en muy mal rendimiento a tu teléfono o tu navegador, si estás pensando hacerlo, toma tus medidas de precaución q(≧▽≦q).
+
+**Nota:** Las ecuaciones cuadráticas, cúbicas y exponenciales solo detectan la `x` minúscula, por lo que puede que el resultado final no se muestre debidamente.

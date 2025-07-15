@@ -64,7 +64,7 @@ Para web, simplemente bastará que ejecutes el siguiente comando una vez instala
 npx expo start --web
 ```
 
-Y listo, ya cuentas con el proyecto corriendo en los medios compatiblesa (●'◡'●)
+Y listo, ya cuentas con el proyecto corriendo en los medios compatibles (●'◡'●)
 
 ### Notas:
 Esta aplicación resuelve ecuaciones matematicas de los tipos:

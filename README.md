@@ -47,7 +47,7 @@ Ahora para Android Studio es el mismo cuento solo que necesitarás configurarlo 
 -> Valor de la 
     -> C:\Users\${Aqui_va_tu_usuario}\AppData\Local\Android\Sdk
 ```
-**Nota:** Esto que enseñe de los directorios es en Windows, puede que en tu sistema operativo que uses sea diferente.
+**Nota:** Esto que enseñe de los directorios es en Windows, puede que en tu sistema operativo que uses sea diferente. Aunado a que aplicando los cambios debes reiniciar tu terminal o tu sistema para que estos cambios surtan efecto.s
 
 Ahora sí, el comando que sigue después de ejecutar `npx expo prebuild` se es necesario ejecutar el siguiente comando:
 
